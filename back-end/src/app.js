@@ -5,6 +5,7 @@ const postsRoutes = require('./routes/postsRoutes');
 const commentsRoutes = require('./routes/commentsRoutes');
 const categoriesRoutes = require('./routes/categoriesRoutes');
 const postCategoriesRoutes = require('./routes/postCategoriesRoutes');
+const authRoutes = require('./routes/authRoutes'); // Adjust the path as needed
 
 // Initialize express app
 const app = express();
@@ -14,7 +15,8 @@ dotenv.config();
 
 // Middlewares
 app.use(express.json()); // for parsing application/json
-
+// Use auth routes
+app.use('/api/auth', authRoutes);
 // API Routes
 app.use('/api/users', usersRoutes);
 app.use('/api/posts', postsRoutes);

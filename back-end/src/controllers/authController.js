@@ -2,10 +2,17 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const usersModel = require('../models/users');
 
+// Function to hash passwords
+async function hashPassword(password) {
+    const saltRounds = 10;
+    return await bcrypt.hash(password, saltRounds);
+}
+
 // Function to validate password
 async function validatePassword(plainPassword, hashedPassword) {
     return await bcrypt.compare(plainPassword, hashedPassword);
 }
+
 
 // Login User
 const loginUser = async (req, res) => {
@@ -30,4 +37,4 @@ const loginUser = async (req, res) => {
     }
 };
 
-module.exports = { loginUser };
+module.exports = { loginUser, hashPassword };

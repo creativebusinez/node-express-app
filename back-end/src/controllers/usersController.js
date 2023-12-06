@@ -16,6 +16,8 @@ const createUser = async (req, res) => {
         const { username, email, password } = req.body;
         const newUser = await usersModel.createUser(username, email, password);
         res.json(newUser.rows[0]);
+        const { password: _, ...userData } = newUser.rows[0];
+        res.json(userData);
     } catch (error) {
         res.status(500).send(error.message);
     }

@@ -17,6 +17,7 @@ async function validatePassword(plainPassword, hashedPassword) {
 // Login User
 const loginUser = async (req, res) => {
     try {
+        console.log ("Login route hit");
         const { email, password } = req.body;
         const user = await usersModel.getUserByEmail(email);
 

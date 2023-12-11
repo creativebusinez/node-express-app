@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { fetchPosts } from '../services/postsService';
+import { Link } from 'react-router-dom';
 
 const BlogPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -12,7 +13,7 @@ const BlogPosts = () => {
         const data = await fetchPosts();
         setPosts(data);
       } catch (error) {
-        console.error('Failed to fetch posts:', error);
+        console.error('Error fetching posts:', error);
       }
     };
 
@@ -24,10 +25,12 @@ const BlogPosts = () => {
       <h1>Blog Posts</h1>
       {posts.length > 0 ? (
         <ul>
-          {posts.map((post, index) => (
-            <li key={index}>
+          {posts.map(post => (
+            <li key={post.id}>
               <h2>{post.title}</h2>
               <p>{post.content}</p> {/* Adjust based on your post object */}
+              {/* Link to a detailed post view if implemented */}
+              {/* <Link to={`/posts/${post.id}`}>Read More</Link> */}
             </li>
           ))}
         </ul>
@@ -39,3 +42,4 @@ const BlogPosts = () => {
 };
 
 export default BlogPosts;
+

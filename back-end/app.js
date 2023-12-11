@@ -1,17 +1,21 @@
-const express = require('express');
 const dotenv = require('dotenv');
-const usersRoutes = require('./routes/usersRoutes');
-const postsRoutes = require('./routes/postsRoutes');
-const commentsRoutes = require('./routes/commentsRoutes');
-const categoriesRoutes = require('./routes/categoriesRoutes');
-const postCategoriesRoutes = require('./routes/postCategoriesRoutes');
-const authRoutes = require('./routes/authRoutes'); // Adjust the path as needed
+const express = require('express');
+const cors = require('cors');
+const usersRoutes = require('./src/routes/usersRoutes');
+const postsRoutes = require('./src/routes/postsRoutes');
+const commentsRoutes = require('./src/routes/commentsRoutes');
+const categoriesRoutes = require('./src/routes/categoriesRoutes');
+const postCategoriesRoutes = require('./src/routes/postCategoriesRoutes');
+const authRoutes = require('./src/routes/authRoutes');
 
 // Initialize express app
 const app = express();
 
 // Load environment variables
 dotenv.config();
+
+// Enable CORS for all routes
+app.use(cors());
 
 // Middlewares
 app.use(express.json()); // for parsing application/json
@@ -32,18 +36,11 @@ app.get('/', (req, res) => {
 });
 
 // Handling 404 - Resource Not Found
-// Add a catch-all route for unmatched routes
 app.use((req, res, next) => {
     const error = new Error('Not Found');
     error.status = 404;
     next(error);
 });
-
-// Handling 500 - Internal Server Error
-// app.use((error, req, res, next) => {
-//     console.error(error.stack);
-//     res.status(500).send('Something broke!');
-// });
 
 // Error handling middleware
 app.use((error, req, res, next) => {
@@ -54,20 +51,10 @@ app.use((error, req, res, next) => {
     });
 });
 
-
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-// Error handling middleware
-app.use((error, req, res, next) => {
-    const statusCode = error.statusCode || 500;
-    const message = error.message;
-    const data = error.data;
-    res.status(statusCode).json({ message, data });
-});
-
 
 module.exports = app;

@@ -30,7 +30,7 @@ const BlogPosts = () => {
               <h2>{post.title}</h2>
               <p>{post.content}</p> {/* Adjust based on your post object */}
               {/* Link to a detailed post view if implemented */}
-              {/* <Link to={`/posts/${post.id}`}>Read More</Link> */}
+              <Link to={`/posts/${post.id}`}>Read More</Link> 
             </li>
           ))}
         </ul>
